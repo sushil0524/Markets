@@ -28,9 +28,9 @@ public class StockTradeRestController {
     public List<TradeResponse> getAllTrades(@RequestParam(value="type",required = false) String type,
                                             @RequestParam(value ="userId",required = false) Integer userId){
         if(type!=null && !type.isEmpty()){
-            tradeService.getTradeByType(type);
+            return tradeService.getTradeByType(type);
         } else if (userId!=null) {
-            tradeService.getTradeByUser(userId);
+            return tradeService.getTradeByUser(userId);
         }
         return tradeService.getAllTrades();
     }

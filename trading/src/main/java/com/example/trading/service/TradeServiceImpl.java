@@ -40,12 +40,28 @@ public class TradeServiceImpl implements  TradeService{
     }
     @Override
     public List<TradeResponse> getTradeByType(String type) {
-        return null;
+        List<StockTrade> all = stockTradeRepository.findAll()
+                .stream()
+                .filter(stockTrade -> stockTrade.getType().equals(type))
+                .toList();
+        if (! all.isEmpty()){
+            return all.stream().map(tradeMapper::transformToDto).collect(Collectors.toList());
+        }
+        else
+            throw new TradeNotFoundException("Trade Details not available for the type ");
     }
 
     @Override
     public List<TradeResponse> getTradeByUser(Integer userId) {
-        return null;
+        List<StockTrade> all = stockTradeRepository.findAll()
+                .stream()
+                .filter(stockTrade -> stockTrade.getUserId().equals(userId))
+                .toList();
+        if (!all.isEmpty()){
+            return all.stream().map(tradeMapper::transformToDto).collect(Collectors.toList());
+        }
+        else
+            throw new TradeNotFoundException("Trade Details not available for the Id ");
     }
 
 }
